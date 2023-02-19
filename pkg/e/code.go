@@ -10,4 +10,8 @@ const (
 	ErrorExistUserNotFound = 30003
 	ErrorNotCompare        = 30004
 	ErrorAuthToken         = 30005
+
+	StatusNotFound             = 404
+	ErrorAuthCheckTokenFail    = 405
+	ErrorAuthCheckTokenTimeout = 406
 )

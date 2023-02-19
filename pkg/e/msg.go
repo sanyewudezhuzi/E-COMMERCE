@@ -10,6 +10,10 @@ var MsgFlags = map[int]string{
 	ErrorExistUserNotFound: "User does not exist.",
 	ErrorNotCompare:        "Password error.",
 	ErrorAuthToken:         "Token authentication failed.",
+
+	StatusNotFound:             "Status not found.",
+	ErrorAuthCheckTokenFail:    "Token validation failed",
+	ErrorAuthCheckTokenTimeout: "Token has expired.",
 }
 
 // 获取状态码对应的信息

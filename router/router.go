@@ -17,12 +17,20 @@ func Router() *gin.Engine {
 		// 心跳测试
 		E.GET("ping", func(ctx *gin.Context) { ctx.JSON(http.StatusOK, "pong") })
 
+		// unlogin
+		unlogin := E.Group("unlogin")
+		{
+			unlogin.POST("register", apiuser.UserRegister)
+			unlogin.POST("login", apiuser.UserLogin)
+		}
+		// middleware
+		E.Use(middleware.JWT())
 		// user
 		user := E.Group("user")
 		{
-			user.POST("register", apiuser.UserRegister)
-			user.POST("login", apiuser.UserLogin)
+			user.PUT("update", apiuser.UserUpdate)
 		}
 	}
+
 	return r
 }
