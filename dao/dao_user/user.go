@@ -20,13 +20,13 @@ func NewUserDaoByDB(db *gorm.DB) *UserDao {
 }
 
 // 根据 account 判断用户是否已注册
-func (dao *UserDao) ExistOrNotByAccount(account string) bool {
+func (dao *UserDao) ExistOrNotByAccount(account string) (*model.User, bool) {
 	var user model.User
 	model.DB.Model(&model.User{}).Where("account = ?", account).First(&user)
 	if user.ID == 0 {
-		return false
+		return nil, false
 	}
-	return true
+	return &user, true
 }
 
 // 创建用户

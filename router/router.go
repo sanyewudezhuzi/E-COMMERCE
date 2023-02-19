@@ -21,6 +21,7 @@ func Router() *gin.Engine {
 		user := E.Group("user")
 		{
 			user.POST("register", apiuser.UserRegister)
+			user.POST("login", apiuser.UserLogin)
 		}
 	}
 	return r

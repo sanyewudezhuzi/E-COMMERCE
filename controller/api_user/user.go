@@ -19,3 +19,16 @@ func UserRegister(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func UserLogin(ctx *gin.Context) {
+	// 创建服务
+	var userLogin serviceuser.UserRegisterService
+
+	// 绑定参数
+	if err := ctx.ShouldBind(&userLogin); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+	} else {
+		res := userLogin.Login(ctx.Request.Context())
+		ctx.JSON(http.StatusOK, res)
+	}
+}

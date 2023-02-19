@@ -35,7 +35,7 @@ func (s *UserRegisterService) Register(ctx context.Context) serializer.Response 
 	util.Encrypt.SetKey(s.Key)
 	// 数据持久化
 	userDao := daouser.NewUserDao(ctx)
-	exist := userDao.ExistOrNotByAccount(s.Account)
+	_, exist := userDao.ExistOrNotByAccount(s.Account)
 	if exist {
 		code = e.ErrorExistUser
 		return serializer.Response{
@@ -65,5 +65,42 @@ func (s *UserRegisterService) Register(ctx context.Context) serializer.Response 
 	return serializer.Response{
 		StatusCode: code,
 		Msg:        e.GetMsg(code),
+	}
+}
+
+func (s *UserRegisterService) Login(ctx context.Context) serializer.Response {
+	var user *model.User
+	code := e.Success
+	userDao := daouser.NewUserDao(ctx)
+	user, exist := userDao.ExistOrNotByAccount(s.Account)
+	if !exist {
+		code = e.ErrorExistUserNotFound
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	if !user.Check(s.Password) {
+		code = e.ErrorNotCompare
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	tokenStr, err := util.GenerateToken(user.ID, s.Account, 0)
+	if err != nil {
+		code = e.ErrorAuthToken
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	return serializer.Response{
+		StatusCode: code,
+		Data: serializer.TokenData{
+			User:  serializer.BuildUser(user),
+			Token: tokenStr,
+		},
+		Msg: e.GetMsg(code),
 	}
 }

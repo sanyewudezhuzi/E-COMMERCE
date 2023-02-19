@@ -3,6 +3,7 @@ module github.com/sanyewudezhuzi/E-COMMERCE
 go 1.20
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.8.2
 	gopkg.in/ini.v1 v1.67.0
 	gorm.io/driver/mysql v1.4.6
