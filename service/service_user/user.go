@@ -18,7 +18,7 @@ type UserRegisterService struct {
 	Key      string `json:"key" form:"key"` // 前端验证
 }
 
-func (s UserRegisterService) Register(ctx context.Context) serializer.Response {
+func (s *UserRegisterService) Register(ctx context.Context) serializer.Response {
 	// 创建 user
 	var user model.User
 	code := e.Success
