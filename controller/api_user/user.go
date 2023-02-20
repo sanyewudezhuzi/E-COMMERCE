@@ -1,7 +1,6 @@
 package apiuser
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -40,7 +39,6 @@ func UserUpdate(ctx *gin.Context) {
 	if !ok || claims == nil {
 		ctx.JSON(http.StatusInternalServerError, "Failed to get claims.")
 	}
-	fmt.Println("claim:", claims)
 	// 创建服务
 	var userUpdate serviceuser.UserRegisterService
 
@@ -49,6 +47,22 @@ func UserUpdate(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err)
 	} else {
 		res := userUpdate.Update(ctx.Request.Context(), claims.(*util.Claims).ID)
+		ctx.JSON(http.StatusOK, res)
+	}
+}
+
+func UploadAvatar(ctx *gin.Context) {
+	claims, ok := ctx.Get("claims")
+	if !ok || claims == nil {
+		ctx.JSON(http.StatusInternalServerError, "Failed to get claims.")
+	}
+	file, fileHeader, _ := ctx.Request.FormFile("file")
+	fileSize := fileHeader.Size
+	var uploadAvatar serviceuser.UserRegisterService
+	if err := ctx.ShouldBind(&uploadAvatar); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+	} else {
+		res := uploadAvatar.Upload(ctx.Request.Context(), claims.(*util.Claims).ID, file, fileSize)
 		ctx.JSON(http.StatusOK, res)
 	}
 }

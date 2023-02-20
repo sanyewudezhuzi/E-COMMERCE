@@ -11,6 +11,7 @@ const (
 	ErrorNotCompare            = 30004
 	ErrorAuthToken             = 30005
 	ErrorAuthCheckTokenTimeout = 30006
+	ErrorUploadFail            = 30007
 
 	StatusNotFound = 404
 )

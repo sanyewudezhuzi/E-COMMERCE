@@ -3,12 +3,14 @@ package serviceuser
 import (
 	"context"
 	"errors"
+	"mime/multipart"
 
 	daouser "github.com/sanyewudezhuzi/E-COMMERCE/dao/dao_user"
 	"github.com/sanyewudezhuzi/E-COMMERCE/model"
 	"github.com/sanyewudezhuzi/E-COMMERCE/pkg/e"
 	"github.com/sanyewudezhuzi/E-COMMERCE/pkg/util"
 	"github.com/sanyewudezhuzi/E-COMMERCE/serializer"
+	"github.com/sanyewudezhuzi/E-COMMERCE/service/upload"
 )
 
 type UserRegisterService struct {
@@ -125,7 +127,41 @@ func (s *UserRegisterService) Update(ctx context.Context, uid uint) serializer.R
 	}
 	return serializer.Response{
 		StatusCode: code,
-		Msg:        e.GetMsg(code),
 		Data:       serializer.BuildUser(user),
+		Msg:        e.GetMsg(code),
+	}
+}
+
+func (s *UserRegisterService) Upload(ctx context.Context, uid uint, file multipart.File, fileSize int64) serializer.Response {
+	code := e.Success
+	userDao := daouser.NewUserDao(ctx)
+	user, err := userDao.GetUserByID(uid)
+	if err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	filepath, err := upload.UploadAvatarToLocalStatic(file, uid, user.Account)
+	if err != nil {
+		code = e.ErrorUploadFail
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	user.Avatar = filepath
+	if err := userDao.UpdateUserByID(uid, user); err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	return serializer.Response{
+		StatusCode: code,
+		Data:       serializer.BuildUser(user),
+		Msg:        e.GetMsg(code),
 	}
 }

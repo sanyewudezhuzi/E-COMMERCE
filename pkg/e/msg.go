@@ -11,6 +11,7 @@ var MsgFlags = map[int]string{
 	ErrorNotCompare:            "Password error.",
 	ErrorAuthToken:             "Token authentication failed.",
 	ErrorAuthCheckTokenTimeout: "Token has expired.",
+	ErrorUploadFail:            "Image upload failed.",
 
 	StatusNotFound: "Status not found.",
 }

@@ -29,6 +29,7 @@ func Router() *gin.Engine {
 		user := E.Group("user")
 		{
 			user.PUT("update", apiuser.UserUpdate)
+			user.POST("avatar", apiuser.UploadAvatar)
 		}
 	}
 
