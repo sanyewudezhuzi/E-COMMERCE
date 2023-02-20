@@ -5,15 +5,14 @@ var MsgFlags = map[int]string{
 	Error:         "fail",
 	InvaildParams: "Parameter error.",
 
-	ErrorExistUser:         "User has been registered.",
-	ErrorFailEncryption:    "Password encryption failed.",
-	ErrorExistUserNotFound: "User does not exist.",
-	ErrorNotCompare:        "Password error.",
-	ErrorAuthToken:         "Token authentication failed.",
-
-	StatusNotFound:             "Status not found.",
-	ErrorAuthCheckTokenFail:    "Token validation failed",
+	ErrorExistUser:             "User has been registered.",
+	ErrorFailEncryption:        "Password encryption failed.",
+	ErrorExistUserNotFound:     "User does not exist.",
+	ErrorNotCompare:            "Password error.",
+	ErrorAuthToken:             "Token authentication failed.",
 	ErrorAuthCheckTokenTimeout: "Token has expired.",
+
+	StatusNotFound: "Status not found.",
 }
 
 // 获取状态码对应的信息
