@@ -5,6 +5,7 @@ import (
 
 	daocarousel "github.com/sanyewudezhuzi/E-COMMERCE/dao/dao_carousel"
 	"github.com/sanyewudezhuzi/E-COMMERCE/pkg/e"
+	"github.com/sanyewudezhuzi/E-COMMERCE/pkg/util"
 	"github.com/sanyewudezhuzi/E-COMMERCE/serializer"
 )
 
@@ -16,6 +17,7 @@ func (s *CarouselService) Show(ctx context.Context) serializer.Response {
 	code := e.Success
 	carousels, err := carouselDao.ShowCarousel()
 	if err != nil {
+		util.LogrusObj.Info("err", err)
 		code = e.Error
 		return serializer.Response{
 			StatusCode: code,

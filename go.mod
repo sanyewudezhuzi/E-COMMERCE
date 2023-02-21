@@ -11,7 +11,10 @@ require (
 	gorm.io/gorm v1.24.5
 )
 
-require gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+require (
+	github.com/sirupsen/logrus v1.9.0 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
