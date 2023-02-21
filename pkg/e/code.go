@@ -1,9 +1,10 @@
 package e
 
 const (
-	Success       = 0
-	Error         = -1
-	InvaildParams = 400
+	Success        = 0
+	Error          = -1
+	InvaildParams  = 400
+	StatusNotFound = 404
 
 	ErrorExistUser             = 30001
 	ErrorFailEncryption        = 30002
@@ -12,6 +13,5 @@ const (
 	ErrorAuthToken             = 30005
 	ErrorAuthCheckTokenTimeout = 30006
 	ErrorUploadFail            = 30007
-
-	StatusNotFound = 404
+	ErrorSendEmail             = 30008
 )

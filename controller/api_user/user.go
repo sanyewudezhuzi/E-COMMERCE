@@ -66,3 +66,27 @@ func UploadAvatar(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func SendEmail(ctx *gin.Context) {
+	claims, ok := ctx.Get("claims")
+	if !ok || claims == nil {
+		ctx.JSON(http.StatusInternalServerError, "Failed to get claims.")
+	}
+	var sendEmail serviceuser.SendEmailService
+	if err := ctx.ShouldBind(&sendEmail); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+	} else {
+		res := sendEmail.Send(ctx.Request.Context(), claims.(*util.Claims).ID)
+		ctx.JSON(http.StatusOK, res)
+	}
+}
+
+func ValidEmail(ctx *gin.Context) {
+	var validEmail serviceuser.ValidEmailService
+	if err := ctx.ShouldBind(&validEmail); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+	} else {
+		res := validEmail.Valid(ctx.Request.Context(), ctx.GetHeader("Authorization"))
+		ctx.JSON(http.StatusOK, res)
+	}
+}

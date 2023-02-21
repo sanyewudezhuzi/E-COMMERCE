@@ -1,9 +1,10 @@
 package e
 
 var MsgFlags = map[int]string{
-	Success:       "ok",
-	Error:         "fail",
-	InvaildParams: "Parameter error.",
+	Success:        "ok",
+	Error:          "fail",
+	InvaildParams:  "Parameter error.",
+	StatusNotFound: "Status not found.",
 
 	ErrorExistUser:             "User has been registered.",
 	ErrorFailEncryption:        "Password encryption failed.",
@@ -12,8 +13,7 @@ var MsgFlags = map[int]string{
 	ErrorAuthToken:             "Token authentication failed.",
 	ErrorAuthCheckTokenTimeout: "Token has expired.",
 	ErrorUploadFail:            "Image upload failed.",
-
-	StatusNotFound: "Status not found.",
+	ErrorSendEmail:             "Failed to send email.",
 }
 
 // 获取状态码对应的信息
