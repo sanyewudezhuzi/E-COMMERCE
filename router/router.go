@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	apicarousel "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_carousel"
 	apiuser "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_user"
 	"github.com/sanyewudezhuzi/E-COMMERCE/middleware"
 )
@@ -23,8 +24,16 @@ func Router() *gin.Engine {
 			unlogin.POST("register", apiuser.UserRegister)
 			unlogin.POST("login", apiuser.UserLogin)
 		}
+
+		// carousel
+		carousel := E.Group("carousel")
+		{
+			carousel.GET("show", apicarousel.ListCarousel)
+		}
+
 		// middleware
 		E.Use(middleware.JWT())
+
 		// user
 		user := E.Group("user")
 		{
