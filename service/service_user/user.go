@@ -35,6 +35,10 @@ type SendEmailService struct {
 type ValidEmailService struct {
 }
 
+type ShowMoneyService struct {
+	Key string `json:"key" form:"key"`
+}
+
 func (s *UserRegisterService) Register(ctx context.Context) serializer.Response {
 	// 创建 user
 	var user model.User
@@ -297,6 +301,24 @@ func (s *ValidEmailService) Valid(ctx context.Context, tokenStr string) serializ
 	return serializer.Response{
 		StatusCode: code,
 		Data:       serializer.BuildUser(user),
+		Msg:        e.GetMsg(code),
+	}
+}
+
+func (s *ShowMoneyService) ShowMoney(ctx context.Context, uid uint) serializer.Response {
+	code := e.Success
+	userDao := daouser.NewUserDao(ctx)
+	user, err := userDao.GetUserByID(uid)
+	if err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+		}
+	}
+	return serializer.Response{
+		StatusCode: code,
+		Data:       serializer.BuildMoney(user, s.Key),
 		Msg:        e.GetMsg(code),
 	}
 }

@@ -90,3 +90,17 @@ func ValidEmail(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func ShowMoney(ctx *gin.Context) {
+	claims, ok := ctx.Get("claims")
+	if !ok || claims == nil {
+		ctx.JSON(http.StatusInternalServerError, "Failed to get claims.")
+	}
+	var showMoney serviceuser.ShowMoneyService
+	if err := ctx.ShouldBind(&showMoney); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+	} else {
+		res := showMoney.ShowMoney(ctx.Request.Context(), claims.(*util.Claims).ID)
+		ctx.JSON(http.StatusOK, res)
+	}
+}

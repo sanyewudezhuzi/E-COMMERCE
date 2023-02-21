@@ -32,6 +32,7 @@ func Router() *gin.Engine {
 			user.POST("avatar", apiuser.UploadAvatar)
 			user.POST("sending-email", apiuser.SendEmail)
 			user.POST("valid-email", apiuser.ValidEmail)
+			user.POST("money", apiuser.ShowMoney)
 		}
 	}
 
