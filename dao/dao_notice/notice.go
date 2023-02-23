@@ -3,6 +3,7 @@ package daonotice
 import (
 	"context"
 
+	"github.com/sanyewudezhuzi/E-COMMERCE/dao"
 	"github.com/sanyewudezhuzi/E-COMMERCE/model"
 	"gorm.io/gorm"
 )
@@ -12,7 +13,7 @@ type NoticeDao struct {
 }
 
 func NewNoticeDao(ctx context.Context) *NoticeDao {
-	return &NoticeDao{model.NewDBClient(ctx)}
+	return &NoticeDao{dao.NewDBClient(ctx)}
 }
 
 func NewNoticeDaoByDB(db *gorm.DB) *NoticeDao {

@@ -3,6 +3,7 @@ package daouser
 import (
 	"context"
 
+	"github.com/sanyewudezhuzi/E-COMMERCE/dao"
 	"github.com/sanyewudezhuzi/E-COMMERCE/model"
 	"gorm.io/gorm"
 )
@@ -12,7 +13,7 @@ type UserDao struct {
 }
 
 func NewUserDao(ctx context.Context) *UserDao {
-	return &UserDao{model.NewDBClient(ctx)}
+	return &UserDao{dao.NewDBClient(ctx)}
 }
 
 func NewUserDaoByDB(db *gorm.DB) *UserDao {

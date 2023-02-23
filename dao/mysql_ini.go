@@ -1,10 +1,11 @@
-package model
+package dao
 
 import (
 	"context"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sanyewudezhuzi/E-COMMERCE/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -60,17 +61,17 @@ func ConnectMySQL(dsn_read, dsn_write string) {
 // 数据库表自动迁移
 func AutomigrateMySQL() {
 	err := DB.Set("gorm:table_options", "charset=utf8mb4").AutoMigrate(
-		&Address{},
-		&Admin{},
-		&Carousel{},
-		&Cart{},
-		&Category{},
-		&Favorite{},
-		&Notice{},
-		&Order{},
-		&ProductImg{},
-		&Product{},
-		&User{},
+		&model.Address{},
+		&model.Admin{},
+		&model.Carousel{},
+		&model.Cart{},
+		&model.Category{},
+		&model.Favorite{},
+		&model.Notice{},
+		&model.Order{},
+		&model.ProductImg{},
+		&model.Product{},
+		&model.User{},
 	)
 	if err != nil {
 		panic("Failed to automigrate.")

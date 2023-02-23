@@ -3,6 +3,7 @@ package daocarousel
 import (
 	"context"
 
+	"github.com/sanyewudezhuzi/E-COMMERCE/dao"
 	"github.com/sanyewudezhuzi/E-COMMERCE/model"
 	"gorm.io/gorm"
 )
@@ -12,7 +13,7 @@ type CarouselDao struct {
 }
 
 func NewCarouselDao(ctx context.Context) *CarouselDao {
-	return &CarouselDao{model.NewDBClient(ctx)}
+	return &CarouselDao{dao.NewDBClient(ctx)}
 }
 
 func NewCarouselDaoByDB(db *gorm.DB) *CarouselDao {

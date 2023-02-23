@@ -3,8 +3,7 @@ package conf
 import (
 	"strings"
 
-	"github.com/sanyewudezhuzi/E-COMMERCE/model"
-
+	"github.com/sanyewudezhuzi/E-COMMERCE/dao"
 	"gopkg.in/ini.v1"
 )
 
@@ -18,11 +17,6 @@ var (
 	DbUser     string
 	DbPassword string
 	DbName     string
-
-	RedisDB     string
-	RedisAddr   string
-	RedisPw     string
-	RedisDbName string
 
 	ValidEmail string
 	SmtpHost   string
@@ -43,14 +37,13 @@ func LoadConf() {
 
 	loadService(file)
 	loadMysql(file)
-	loadRedis(file)
 	loadEmail(file)
 	loadPath(file)
 
 	// connect mysql
 	mysql_dsn_read := strings.Join([]string{DbUser, ":", DbPassword, "@tcp(", DbHost, ":", DbPort, ")/", DbName, "?charset=utf8mb4&parseTime=true&loc=Local"}, "")
 	mysql_dsn_write := strings.Join([]string{DbUser, ":", DbPassword, "@tcp(", DbHost, ":", DbPort, ")/", DbName, "?charset=utf8mb4&parseTime=true&loc=Local"}, "")
-	model.ConnectMySQL(mysql_dsn_read, mysql_dsn_write)
+	dao.ConnectMySQL(mysql_dsn_read, mysql_dsn_write)
 }
 
 func loadService(f *ini.File) {
@@ -65,13 +58,6 @@ func loadMysql(f *ini.File) {
 	DbUser = f.Section("mysql").Key("DbUser").String()
 	DbPassword = f.Section("mysql").Key("DbPassword").String()
 	DbName = f.Section("mysql").Key("DbName").String()
-}
-
-func loadRedis(f *ini.File) {
-	RedisDB = f.Section("redis").Key("RedisDB").String()
-	RedisAddr = f.Section("redis").Key("RedisAddr").String()
-	RedisPw = f.Section("redis").Key("RedisPw").String()
-	RedisDbName = f.Section("redis").Key("RedisDbName").String()
 }
 
 func loadEmail(f *ini.File) {

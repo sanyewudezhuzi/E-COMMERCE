@@ -14,4 +14,6 @@ const (
 	ErrorAuthCheckTokenTimeout = 30006
 	ErrorUploadFail            = 30007
 	ErrorSendEmail             = 30008
+
+	ErrorProductImgLoad = 40001
 )

@@ -14,6 +14,8 @@ var MsgFlags = map[int]string{
 	ErrorAuthCheckTokenTimeout: "Token has expired.",
 	ErrorUploadFail:            "Image upload failed.",
 	ErrorSendEmail:             "Failed to send email.",
+
+	ErrorProductImgLoad: "Failed to upload product img.",
 }
 
 // 获取状态码对应的信息

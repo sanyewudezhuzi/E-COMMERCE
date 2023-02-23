@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	apicarousel "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_carousel"
+	apiproduct "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_product"
 	apiuser "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_user"
 	"github.com/sanyewudezhuzi/E-COMMERCE/middleware"
 )
@@ -42,6 +43,12 @@ func Router() *gin.Engine {
 			user.POST("sending-email", apiuser.SendEmail)
 			user.POST("valid-email", apiuser.ValidEmail)
 			user.POST("money", apiuser.ShowMoney)
+		}
+
+		// product
+		product := E.Group("product")
+		{
+			product.POST("create", apiproduct.CreateProduct)
 		}
 	}
 
