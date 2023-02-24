@@ -42,7 +42,7 @@ func UploadProductToLocalStatic(file multipart.File, uid uint, name string) (str
 	if err != nil {
 		return "", err
 	}
-	return "user_" + uid_str + "/" + name + ".JPG", nil
+	return "boss_" + uid_str + "/" + name + ".JPG", nil
 }
 
 // 判断文件夹路径是否存在
