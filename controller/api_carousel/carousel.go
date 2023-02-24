@@ -57,3 +57,13 @@ func ProductImg(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func ProductCategory(ctx *gin.Context) {
+	var productCategory serviceproduct.ProductService
+	if err := ctx.ShouldBind(&productCategory); err != nil {
+		ctx.JSON(http.StatusOK, err)
+	} else {
+		res := productCategory.ProductCategory(ctx.Request.Context())
+		ctx.JSON(http.StatusOK, res)
+	}
+}

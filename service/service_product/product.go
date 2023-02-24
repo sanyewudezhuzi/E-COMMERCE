@@ -201,3 +201,18 @@ func (s *ProductService) ProductImg(ctx context.Context, id string) serializer.R
 	}
 	return serializer.BuildListResponse(serializer.BuildProductImgs(productImgs), int(total))
 }
+
+func (s *ProductService) ProductCategory(ctx context.Context) serializer.Response {
+	code := e.Success
+	categoryDao := daoproduct.NewProductDao(ctx)
+	category, err := categoryDao.GetCategory()
+	if err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+			Error:      err,
+		}
+	}
+	return serializer.BuildListResponse(serializer.BuildCategorys(category), len(category))
+}

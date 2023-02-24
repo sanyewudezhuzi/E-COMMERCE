@@ -51,3 +51,9 @@ func (dao *ProductDao) GetProductByPID(pid int) (model.Product, error) {
 	err := dao.DB.Model(&model.Product{}).Where("id = ?", pid).First(&product).Error
 	return product, err
 }
+
+func (dao *ProductDao) GetCategory() ([]model.Category, error) {
+	var category []model.Category
+	err := dao.DB.Model(&model.Category{}).Find(&category).Error
+	return category, err
+}
