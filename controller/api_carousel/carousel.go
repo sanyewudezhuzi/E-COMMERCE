@@ -37,3 +37,13 @@ func ProductSearch(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func ProductShow(ctx *gin.Context) {
+	var productShow serviceproduct.ProductService
+	if err := ctx.ShouldBind(&productShow); err != nil {
+		ctx.JSON(http.StatusOK, err)
+	} else {
+		res := productShow.ProductShow(ctx.Request.Context(), ctx.Param("id"))
+		ctx.JSON(http.StatusOK, res)
+	}
+}

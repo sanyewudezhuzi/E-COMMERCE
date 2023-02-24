@@ -45,3 +45,9 @@ func (dao *ProductDao) GetProductsAndTotalByInfo(info string, base model.BasePag
 		Find(&products).Count(&total).Error
 	return products, total, err
 }
+
+func (dao *ProductDao) GetProductByPID(pid int) (model.Product, error) {
+	var product model.Product
+	err := dao.DB.Model(&model.Product{}).Where("id = ?", pid).First(&product).Error
+	return product, err
+}
