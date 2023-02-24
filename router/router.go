@@ -30,6 +30,7 @@ func Router() *gin.Engine {
 		carousel := E.Group("carousel")
 		{
 			carousel.GET("show", apicarousel.ListCarousel)
+			carousel.GET("productlist", apicarousel.ProductList)
 		}
 
 		// middleware

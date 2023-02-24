@@ -42,3 +42,12 @@ func BuildProduct(product model.Product) Product {
 		BossAvatar:    conf.Host + conf.HttpPort + conf.AvatarPath + product.BossAvatar,
 	}
 }
+
+func BuildProducts(products []model.Product) []Product {
+	var Products []Product = make([]Product, len(products))
+	for k, v := range products {
+		Products[k] = BuildProduct(v)
+	}
+	return Products
+
+}

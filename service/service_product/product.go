@@ -110,3 +110,37 @@ func (s *ProductService) Create(ctx context.Context, uid uint, files []*multipar
 		Msg:        e.GetMsg(code),
 	}
 }
+
+func (s *ProductService) ProductList(ctx context.Context) serializer.Response {
+	code := e.Success
+	if s.PageSize == 0 {
+		s.PageSize = 5
+	}
+	if s.PageNum == 0 {
+		s.PageNum = 1
+	}
+	condition := make(map[string]interface{})
+	if s.CategoryID != 0 {
+		condition["category_id"] = s.CategoryID
+	}
+	productDao := daoproduct.NewProductDao(ctx)
+	var products []model.Product
+	total, err := productDao.GetProductCountByCondition(condition)
+	if err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+			Error:      err,
+		}
+	}
+	wg := new(sync.WaitGroup)
+	wg.Add(1)
+	go func() {
+		productDao = daoproduct.NewProductDaoByDB(productDao.DB)
+		products, _ = productDao.GetProductsByCondition(condition, s.BasePage)
+		wg.Done()
+	}()
+	wg.Wait()
+	return serializer.BuildListResponse(serializer.BuildProducts(products), int(total))
+}

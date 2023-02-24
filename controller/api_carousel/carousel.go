@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	servicecarousel "github.com/sanyewudezhuzi/E-COMMERCE/service/service_carousel"
+	serviceproduct "github.com/sanyewudezhuzi/E-COMMERCE/service/service_product"
 )
 
 func ListCarousel(ctx *gin.Context) {
@@ -13,6 +14,16 @@ func ListCarousel(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, err)
 	} else {
 		res := listCarousel.Show(ctx.Request.Context())
+		ctx.JSON(http.StatusOK, res)
+	}
+}
+
+func ProductList(ctx *gin.Context) {
+	var productList serviceproduct.ProductService
+	if err := ctx.ShouldBind(&productList); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+	} else {
+		res := productList.ProductList(ctx.Request.Context())
 		ctx.JSON(http.StatusOK, res)
 	}
 }
