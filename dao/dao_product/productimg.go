@@ -23,3 +23,10 @@ func NewProductImgDapByDB(db *gorm.DB) *ProductImgDao {
 func (dao *ProductImgDao) CreateProductImg(productImg *model.ProductImg) error {
 	return dao.DB.Model(&model.ProductImg{}).Create(&productImg).Error
 }
+
+func (dao *ProductImgDao) GetProductImgsAndTotalByPID(pid int) ([]model.ProductImg, int64, error) {
+	var productImgs []model.ProductImg
+	var count int64
+	err := dao.DB.Model(&model.ProductImg{}).Where("product_id = ?", pid).Find(&productImgs).Count(&count).Error
+	return productImgs, count, err
+}

@@ -47,3 +47,13 @@ func ProductShow(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, res)
 	}
 }
+
+func ProductImg(ctx *gin.Context) {
+	var productImg serviceproduct.ProductService
+	if err := ctx.ShouldBind(&productImg); err != nil {
+		ctx.JSON(http.StatusOK, err)
+	} else {
+		res := productImg.ProductImg(ctx.Request.Context(), ctx.Param("id"))
+		ctx.JSON(http.StatusOK, res)
+	}
+}

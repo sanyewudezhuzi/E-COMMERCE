@@ -184,5 +184,20 @@ func (s *ProductService) ProductShow(ctx context.Context, id string) serializer.
 		Data:       serializer.BuildProduct(product),
 		Msg:        e.GetMsg(code),
 	}
+}
 
+func (s *ProductService) ProductImg(ctx context.Context, id string) serializer.Response {
+	code := e.Success
+	pid, _ := strconv.Atoi(id)
+	productDao := daoproduct.NewProductImgDao(ctx)
+	productImgs, total, err := productDao.GetProductImgsAndTotalByPID(pid)
+	if err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+			Error:      err,
+		}
+	}
+	return serializer.BuildListResponse(serializer.BuildProductImgs(productImgs), int(total))
 }
