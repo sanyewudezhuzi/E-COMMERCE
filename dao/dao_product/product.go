@@ -35,3 +35,13 @@ func (dao *ProductDao) GetProductsByCondition(condition map[string]interface{}, 
 	err := dao.DB.Model(&model.Product{}).Where(condition).Offset((page.PageNum - 1) * page.PageSize).Limit(page.PageSize).Find(&products).Error
 	return products, err
 }
+
+func (dao *ProductDao) GetProductsAndTotalByInfo(info string, base model.BasePage) ([]model.Product, int64, error) {
+	var products []model.Product
+	var total int64
+	err := dao.DB.Model(&model.Product{}).
+		Where("info like ? or title like ?", "%"+info+"%", "%"+info+"%").
+		Offset((base.PageNum - 1) * base.PageSize).Limit(base.PageSize).
+		Find(&products).Count(&total).Error
+	return products, total, err
+}

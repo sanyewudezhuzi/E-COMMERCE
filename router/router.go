@@ -31,6 +31,7 @@ func Router() *gin.Engine {
 		{
 			carousel.GET("show", apicarousel.ListCarousel)
 			carousel.GET("productlist", apicarousel.ProductList)
+			carousel.POST("search", apicarousel.ProductSearch)
 		}
 
 		// middleware

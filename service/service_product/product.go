@@ -144,3 +144,24 @@ func (s *ProductService) ProductList(ctx context.Context) serializer.Response {
 	wg.Wait()
 	return serializer.BuildListResponse(serializer.BuildProducts(products), int(total))
 }
+
+func (s *ProductService) ProductSearch(ctx context.Context) serializer.Response {
+	code := e.Success
+	if s.PageSize == 0 {
+		s.PageSize = 5
+	}
+	if s.PageNum == 0 {
+		s.PageNum = 1
+	}
+	productDao := daoproduct.NewProductDao(ctx)
+	products, total, err := productDao.GetProductsAndTotalByInfo(s.Info, s.BasePage)
+	if err != nil {
+		code = e.Error
+		return serializer.Response{
+			StatusCode: code,
+			Msg:        e.GetMsg(code),
+			Error:      err,
+		}
+	}
+	return serializer.BuildListResponse(serializer.BuildProducts(products), int(total))
+}
