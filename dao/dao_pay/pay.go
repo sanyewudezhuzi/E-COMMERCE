@@ -21,7 +21,3 @@ func (dao *PayDao) GetOrderByOrderID(oid, uid uint) (model.Order, error) {
 	err := dao.DB.Model(&model.Order{}).Where("id = ? and user_id = ?", oid, uid).First(&order).Error
 	return order, err
 }
-
-func (dao *PayDao) OrderPay() error {
-
-}
