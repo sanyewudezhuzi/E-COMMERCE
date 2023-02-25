@@ -57,3 +57,7 @@ func (dao *ProductDao) GetCategory() ([]model.Category, error) {
 	err := dao.DB.Model(&model.Category{}).Find(&category).Error
 	return category, err
 }
+
+func (dao *ProductDao) UpdateProduct(product model.Product) error {
+	return dao.DB.Model(&model.Product{}).Where("id = ?", product.ID).Updates(&product).Error
+}

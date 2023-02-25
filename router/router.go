@@ -4,8 +4,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	apiaddress "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_address"
 	apicarousel "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_carousel"
+	apicarts "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_carts"
 	apifavorite "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_favorite"
+	apipay "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_pay"
 	apiproduct "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_product"
 	apiuser "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_user"
 	"github.com/sanyewudezhuzi/E-COMMERCE/middleware"
@@ -63,6 +66,31 @@ func Router() *gin.Engine {
 			favorite.GET("list", apifavorite.FavoriteList)
 			favorite.POST("create", apifavorite.FavoriteCreate)
 			favorite.DELETE("delete/:id", apifavorite.FavoriteDelete)
+		}
+
+		// carts
+		carts := E.Group("carts")
+		{
+			carts.POST("create", apicarts.CreateCart)
+			carts.GET("show/:id", apicarts.ShowCarts)
+			carts.PUT("update/:id", apicarts.UpdateCart)
+			carts.DELETE("delete/:id", apicarts.DeleteCart)
+		}
+
+		// address
+		address := E.Group("address")
+		{
+			address.POST("create", apiaddress.CreateAddress)
+			address.GET("get/:id", apiaddress.GetAddress)
+			address.GET("list", apiaddress.ListAddress)
+			address.PUT("update/:id", apiaddress.UpdateAddress)
+			address.DELETE("delete/:id", apiaddress.DeleteAddress)
+		}
+
+		// pay
+		pay := E.Group("pay")
+		{
+			pay.POST("order", apipay.OrderPay)
 		}
 	}
 
