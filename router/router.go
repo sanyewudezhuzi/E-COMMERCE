@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	apicarousel "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_carousel"
+	apifavorite "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_favorite"
 	apiproduct "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_product"
 	apiuser "github.com/sanyewudezhuzi/E-COMMERCE/controller/api_user"
 	"github.com/sanyewudezhuzi/E-COMMERCE/middleware"
@@ -54,6 +55,14 @@ func Router() *gin.Engine {
 		product := E.Group("product")
 		{
 			product.POST("create", apiproduct.CreateProduct)
+		}
+
+		// favorite
+		favorite := E.Group("favorite")
+		{
+			favorite.GET("list", apifavorite.FavoriteList)
+			favorite.POST("create", apifavorite.FavoriteCreate)
+			favorite.DELETE("delete/:id", apifavorite.FavoriteDelete)
 		}
 	}
 
